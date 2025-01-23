@@ -1,0 +1,100 @@
+﻿<Window x:Class="CLib.AddSaleDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавить / Редактировать продажу" Height="750" Width="500" Background="#F7F9FB" MinWidth="400" MinHeight="500">
+
+    <Window.Resources>
+        <!-- Стиль для закругленных кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderBrush" Value="#388E3C"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Border Background="White" CornerRadius="10" Margin="10" Padding="20" BorderBrush="#D3D3D3" BorderThickness="1">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="Добавить / Редактировать продажу" FontSize="20" FontWeight="Bold" Foreground="#333" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+                <!-- Поле для выбора товаров -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Товары:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox Name="ProductComboBox" Width="400" Height="100" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" 
+                             DisplayMemberPath="Name" ItemsSource="{Binding Products}"/>
+                </StackPanel>
+
+                <!-- Поле для выбора магазина -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Магазин:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox Name="StoreComboBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" 
+                             DisplayMemberPath="Name" ItemsSource="{Binding Stores}"/>
+                </StackPanel>
+
+                <!-- Поле для способа оплаты -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Способ оплаты:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Name="PaymentMethodTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Поле для суммы -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Сумма:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Name="TotalCostTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Поле для выбора даты -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Дата:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <DatePicker Name="SaleDatePicker" Width="400" Height="40" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Поле для выбора клиента -->
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="Клиент:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox Name="CustomerComboBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" 
+                              ItemsSource="{Binding Customers}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <Run Text="{Binding FirstName}"/>
+                                    <Run Text=" "/>
+                                    <Run Text="{Binding LastName}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Поле для количества товара -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Количество:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Name="QuantityTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Кнопки -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                    <Button Name="SaveButton" Content="Сохранить" Click="SaveButton_Click" />
+                    <Button Name="CancelButton" Content="Отмена" Click="CancelButton_Click" Margin="20,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

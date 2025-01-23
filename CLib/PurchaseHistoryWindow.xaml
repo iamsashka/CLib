@@ -1,0 +1,15 @@
+﻿<Window x:Class="CLib.PurchaseHistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="История покупок" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="PurchaseHistoryDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate}" Width="*"/>
+                <DataGridTextColumn Header="Метод оплаты" Binding="{Binding PaymentMethod}" Width="*"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding TotalCost}" Width="*"/>
+                <DataGridTextColumn Header="Товары" Binding="{Binding ProductNames}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

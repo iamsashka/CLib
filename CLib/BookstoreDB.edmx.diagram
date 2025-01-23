@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d97ad5ef91794a418269a307044bf7db" Name="Diagram1" ZoomLevel="40">
+        <EntityTypeShape EntityType="BookstoreDB.Customers" Width="1.5" PointX="3.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.Products" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.ProductSales" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.Roles" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.Sales" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.Shipments" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.Stores" Width="1.5" PointX="3.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.Suppliers" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookstoreDB.UserAccounts" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="BookstoreDB.FK_Sales_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="BookstoreDB.FK_ProductSales_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="BookstoreDB.FK_Sales_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="BookstoreDB.FK_Shipments_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="BookstoreDB.FK_ProductSales_Sales" ManuallyRouted="false" />
+        <AssociationConnector Association="BookstoreDB.FK_UserAccounts_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="BookstoreDB.FK_Sales_Stores" ManuallyRouted="false" />
+        <AssociationConnector Association="BookstoreDB.FK_Shipments_Suppliers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,26 @@
+﻿<Window x:Class="CLib.InvoiceDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Накладная" Height="400" Width="600" MinWidth="400" MinHeight="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Заголовок -->
+            <RowDefinition Height="*"/>
+            <!-- Текст накладной -->
+            <RowDefinition Height="Auto"/>
+            <!-- Кнопка -->
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Накладная" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.Row="0"/>
+
+        <!-- Текст накладной -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <TextBlock x:Name="InvoiceText" TextWrapping="Wrap" Margin="0,0,0,10"/>
+        </ScrollViewer>
+
+        <!-- Кнопка закрытия -->
+        <Button Content="Закрыть" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.Row="2" Click="CloseButton_Click"/>
+    </Grid>
+</Window>
