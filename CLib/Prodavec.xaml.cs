@@ -21,10 +21,10 @@ namespace CLib
 
         private void LoadSales()
         {
-            // Загружаем все продажи с продуктами и магазинами
             var sales = _context.Sales
                                 .Include(s => s.Products)
                                 .Include(s => s.Stores)
+                                .Include(s => s.Customers) // Загрузка клиентов
                                 .ToList();
 
             SalesDataGrid.ItemsSource = sales;
@@ -33,8 +33,9 @@ namespace CLib
         private void LoadFilters()
         {
             ProductComboBox.ItemsSource = _context.Products.ToList();
-            StoreComboBox.ItemsSource = _context.Stores.ToList();
+            StoreComboBox.ItemsSource = _context.Stores.ToList(); // Фильтрация по клиенту
         }
+
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -104,7 +105,6 @@ namespace CLib
                 MessageBox.Show("Выберите продажу для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
@@ -112,7 +112,5 @@ namespace CLib
             this.Close();
         }
 
-
-        
     }
 }

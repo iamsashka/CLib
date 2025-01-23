@@ -59,24 +59,32 @@
         </Border>
 
         <!-- Содержимое окна -->
-        <Grid Grid.Row="1" HorizontalAlignment="Right" Width="800">
-            <!-- Левые кнопки и фильтры -->
-            <Button Content="Добавить продажу" Margin="10,12,518,332" FontSize="16" FontWeight="Bold" Click="AddSaleButton_Click"/>
-            <Button Content="Редактировать продажу" Margin="10,56,518,288" FontSize="16" FontWeight="Bold" Click="EditSaleButton_Click"/>
-            <Button Content="Удалить продажу" Margin="10,100,518,247" FontSize="16" FontWeight="Bold" Click="DeleteSaleButton_Click"/>
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <!-- Для левой части -->
+                <ColumnDefinition Width="*"/>
+                <!-- Для DataGrid -->
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Vertical" Margin="10,169,518,77">
+            <!-- Левые кнопки и фильтры -->
+            <StackPanel Grid.Column="0" Margin="10" Width="200">
+                <Button Content="Добавить продажу" FontSize="16" FontWeight="Bold" Click="AddSaleButton_Click" Margin="0,0,0,10"/>
+                <Button Content="Редактировать продажу" FontSize="16" FontWeight="Bold" Click="EditSaleButton_Click" Margin="0,0,0,10"/>
+                <Button Content="Удалить продажу" FontSize="16" FontWeight="Bold" Click="DeleteSaleButton_Click" Margin="0,0,0,20"/>
+
                 <TextBlock Text="Фильтрация по товару" FontSize="14" FontWeight="Bold" Margin="0,0,0,5"/>
-                <ComboBox Name="ProductComboBox" Width="200" Margin="0,0,0,10" DisplayMemberPath="Name" SelectedValuePath="ID_Product"/>
+                <ComboBox Name="ProductComboBox" DisplayMemberPath="Name" SelectedValuePath="ID_Product" Margin="0,0,0,10"/>
+
                 <TextBlock Text="Фильтрация по магазину" FontSize="14" FontWeight="Bold" Margin="0,0,0,5"/>
-                <ComboBox Name="StoreComboBox" Width="200" Margin="0,0,0,10" DisplayMemberPath="Name" SelectedValuePath="ID_Store"/>
+                <ComboBox Name="StoreComboBox" DisplayMemberPath="Name" SelectedValuePath="ID_Store" Margin="0,0,0,20"/>
+
+                <Button Content="Поиск" FontSize="16" FontWeight="Bold" Click="SearchButton_Click" Margin="0,0,0,10"/>
+                <Button Content="История продаж" FontSize="16" FontWeight="Bold" Click="HistoryButton_Click"/>
             </StackPanel>
 
-            <Button Content="Поиск" Margin="10,284,518,58" FontSize="16" FontWeight="Bold" Click="SearchButton_Click"/>
-            <Button Content="История продаж" Margin="10,326,518,10" FontSize="16" FontWeight="Bold" Click="HistoryButton_Click"/>
-
             <!-- DataGrid для отображения продаж -->
-            <DataGrid x:Name="SalesDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" ItemsSource="{Binding Sales}" Margin="291,10,14,10">
+            <DataGrid Grid.Column="1" x:Name="SalesDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" ItemsSource="{Binding Sales}" Margin="10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Товар" Binding="{Binding Products.Name}" Width="*" />
                     <DataGridTextColumn Header="Магазин" Binding="{Binding Stores.Name}" Width="*" />
