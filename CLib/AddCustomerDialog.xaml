@@ -49,8 +49,21 @@
                 <!-- Телефон -->
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Телефон" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                    <TextBox Text="{Binding Phone}" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                    <TextBox Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
+             Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Style.Triggers>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                        <Setter Property="BorderBrush" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </StackPanel>
+
 
                 <!-- Номер дисконтной карты -->
                 <StackPanel Margin="0,0,0,10">

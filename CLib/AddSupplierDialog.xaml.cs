@@ -24,6 +24,14 @@ namespace CLib
                 return;
             }
 
+           
+            string phonePattern = @"^(?:\+7|8)\d{10}$"; 
+            if (!System.Text.RegularExpressions.Regex.IsMatch(PhoneTextBox.Text, phonePattern))
+            {
+                MessageBox.Show("Введите корректный номер телефона (например, +7XXXXXXXXXX или 8XXXXXXXXXX.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             try
             {
                 var supplier = new Suppliers
