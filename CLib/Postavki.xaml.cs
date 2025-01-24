@@ -7,7 +7,7 @@ namespace CLib
 {
     public partial class Postavki : Window
     {
-        private BookstoreDBEntities2 _context; // Контекст базы данных
+        private BookstoreDBEntities2 _context;
 
         public Postavki()
         {
@@ -16,7 +16,6 @@ namespace CLib
             LoadSuppliers();
         }
 
-        // Загрузка данных поставщиков
         private void LoadSuppliers()
         {
             try
@@ -30,7 +29,6 @@ namespace CLib
             }
         }
 
-        // Кнопка "Добавление новых поставок"
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new AddSupplierDialog();
@@ -39,12 +37,11 @@ namespace CLib
                 LoadSuppliers();
             }
         }
-        // Кнопка "Учет поступающих партий и товаров"
+
         private void AddShipmentButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Открываем окно для учета партий
                 var shipmentDialog = new AddShipmentDialog();
                 if (shipmentDialog.ShowDialog() == true)
                 {
@@ -57,8 +54,6 @@ namespace CLib
             }
         }
 
-
-        // Кнопка "Формирование накладных"
         private void UpdateProductButton_Click(object sender, RoutedEventArgs e)
         {
             if (SalesDataGrid.SelectedItem is Suppliers selectedSupplier)
@@ -72,7 +67,6 @@ namespace CLib
             }
         }
 
-        // Переход к другим разделам
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = new MainWindow();
@@ -107,10 +101,11 @@ namespace CLib
             profile.Show();
             Close();
         }
+
         private void PostavkiButton_Click(object sender, RoutedEventArgs e)
         {
             Postavki postavki = new Postavki();
-            postavki.Show(); 
+            postavki.Show();
             this.Close();
         }
     }

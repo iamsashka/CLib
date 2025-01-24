@@ -19,33 +19,30 @@ namespace CLib
             this.DataContext = this;
         }
 
-        // Загрузка данных клиентов
         private void LoadCustomers()
         {
-            var customers = _context.Customers.ToList();  // Загружаем всех клиентов
+            var customers = _context.Customers.ToList();
             Customers.Clear();
             foreach (var customer in customers)
             {
-                Customers.Add(customer);  // Добавляем каждого клиента в коллекцию
+                Customers.Add(customer);
             }
-            CustomersDataGrid.ItemsSource = Customers;  // Устанавливаем источник данных для DataGrid
+            CustomersDataGrid.ItemsSource = Customers;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем значения фильтров для поиска
-            string nameFilter = NameFilterTextBox.Text;  // Получаем фамилию клиента
-            string phoneFilter = PhoneFilterTextBox.Text;  // Получаем телефон клиента
+            string nameFilter = NameFilterTextBox.Text;
+            string phoneFilter = PhoneFilterTextBox.Text;
             string lastnameFilter = LastNameFilterTextBox.Text;
 
-            // Применяем фильтрацию на коллекцию клиентов
             var filteredCustomers = _context.Customers.AsQueryable();
 
             if (!string.IsNullOrEmpty(nameFilter))
             {
                 filteredCustomers = filteredCustomers.Where(c => c.FirstName.Contains(nameFilter));
             }
-            if (!string.IsNullOrEmpty(nameFilter))
+            if (!string.IsNullOrEmpty(lastnameFilter))
             {
                 filteredCustomers = filteredCustomers.Where(c => c.LastName.Contains(lastnameFilter));
             }
@@ -55,7 +52,6 @@ namespace CLib
                 filteredCustomers = filteredCustomers.Where(c => c.Phone.Contains(phoneFilter));
             }
 
-            // Обновляем DataGrid с отфильтрованными данными
             CustomersDataGrid.ItemsSource = filteredCustomers.ToList();
         }
 
@@ -67,7 +63,7 @@ namespace CLib
                 var newCustomer = addCustomerDialog.Customer;
                 _context.Customers.Add(newCustomer);
                 _context.SaveChanges();
-                Customers.Add(newCustomer); // Добавляем клиента в коллекцию
+                Customers.Add(newCustomer);
                 MessageBox.Show("Клиент успешно добавлен.");
             }
         }
@@ -79,8 +75,8 @@ namespace CLib
                 var editDialog = new EditCustomerDialog(selectedCustomer);
                 if (editDialog.ShowDialog() == true)
                 {
-                    _context.SaveChanges(); // Сохраняем изменения в базе данных
-                    ReloadData(); // Перезагружаем данные
+                    _context.SaveChanges();
+                    ReloadData();
                     MessageBox.Show("Информация о клиенте обновлена.");
                 }
             }
@@ -99,7 +95,7 @@ namespace CLib
                 {
                     _context.Customers.Remove(selectedCustomer);
                     _context.SaveChanges();
-                    ReloadData(); // Перезагружаем данные
+                    ReloadData();
                     MessageBox.Show("Клиент удален.");
                 }
             }
@@ -131,16 +127,16 @@ namespace CLib
                     c.Phone.ToLower().Contains(phoneFilter))
                 .ToList();
 
-            CustomersDataGrid.ItemsSource = filteredCustomers; // Устанавливаем отфильтрованный список
-        }
-        private void ReloadData()
-        {
-            _context.Dispose(); // Освобождаем предыдущий контекст
-            _context = new BookstoreDBEntities2(); // Создаём новый контекст
-            LoadCustomers(); // Загружаем данные клиентов заново
+            CustomersDataGrid.ItemsSource = filteredCustomers;
         }
 
-        // Переключение на другие окна
+        private void ReloadData()
+        {
+            _context.Dispose();
+            _context = new BookstoreDBEntities2();
+            LoadCustomers();
+        }
+
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

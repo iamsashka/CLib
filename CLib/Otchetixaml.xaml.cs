@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -20,7 +22,6 @@ namespace CLib
             _context = new BookstoreDBEntities2();
         }
 
-        // Отчет: Доходы по магазинам за месяц
         private void GenerateRevenueReport_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -42,6 +43,7 @@ namespace CLib
                 MessageBox.Show($"Ошибка при создании отчета: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
@@ -49,7 +51,6 @@ namespace CLib
             this.Close();
         }
 
-        // Отчет: Самые популярные книги за период
         private void GeneratePopularBooksReport_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -62,7 +63,7 @@ namespace CLib
                         Продажи = g.Count()
                     })
                     .OrderByDescending(x => x.Продажи)
-                    .Take(10)); // Топ 10 книг
+                    .Take(10));
 
                 ReportDataGrid.ItemsSource = _reportData;
                 MessageBox.Show("Отчет по популярным книгам успешно создан!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -72,12 +73,11 @@ namespace CLib
                 MessageBox.Show($"Ошибка при создании отчета: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        // Отчет: Продажи и остатки товаров за все время
+
         private void GenerateSalesAndStockReport_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Запрос данных о продажах и остатках
                 _reportData = new ObservableCollection<object>(_context.Products
                     .Select(p => new
                     {
@@ -85,13 +85,11 @@ namespace CLib
                         Автор = p.Author,
                         Категория = p.Category,
                         Остаток = p.StockQuantity,
-                        // Преобразуем TotalCost в nullable тип и проверяем его на null
                         Продажи = _context.Sales
                             .Where(s => s.Product_ID == p.ID_Product)
-                            .Sum(s => (int?)s.TotalCost) ?? 0 // Преобразуем TotalCost в int? и используем ?? для замены null на 0
+                            .Sum(s => (int?)s.TotalCost) ?? 0
                     }));
 
-                // Отображаем отчет в DataGrid
                 ReportDataGrid.ItemsSource = _reportData;
                 MessageBox.Show("Отчет по продажам и остаткам успешно создан!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -101,13 +99,12 @@ namespace CLib
             }
         }
 
-        // Отчет: Товары с низкими остатками
         private void GenerateLowStockReport_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 _reportData = new ObservableCollection<object>(_context.Products
-                    .Where(p => p.StockQuantity < 10) // Уровень ниже 10
+                    .Where(p => p.StockQuantity < 10)
                     .Select(p => new
                     {
                         Товар = p.Name,
@@ -123,7 +120,12 @@ namespace CLib
             }
         }
 
-        // Экспорт текущего отчета в PDF
+        private void OpenReportWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            var reportWindow = new ReportWindow(_context);
+            reportWindow.Show();
+        }
+
         private void ExportToPDFButton_Click(object sender, RoutedEventArgs e)
         {
             if (_reportData == null || !_reportData.Any())
@@ -149,7 +151,7 @@ namespace CLib
                         pdfDoc.Open();
 
                         pdfDoc.Add(new Paragraph("Отчет"));
-                        pdfDoc.Add(new Paragraph(" ")); // Пустая строка
+                        pdfDoc.Add(new Paragraph(" "));
 
                         foreach (var item in _reportData)
                         {

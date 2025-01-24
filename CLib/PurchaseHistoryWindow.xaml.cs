@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Entity; // Для Include
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 
@@ -20,28 +20,24 @@ namespace CLib
 
         private void LoadPurchaseHistory()
         {
-            // Загружаем данные о продажах с явной загрузкой связанных данных
             var sales = _context.Sales
                 .Where(s => s.Customer_ID == CustomerId)
-                .Include(s => s.ProductSales.Select(ps => ps.Products)) // Явная загрузка связанных данных
+                .Include(s => s.ProductSales.Select(ps => ps.Products))
                 .ToList();
 
-            // Обрабатываем данные для отображения
             var purchaseHistory = sales.Select(s => new
             {
                 s.SaleDate,
                 s.PaymentMethod,
                 s.TotalCost,
-                ProductNames = string.Join(", ", s.ProductSales.Select(ps => ps.Products.Name)) // Преобразуем список названий товаров в строку
+                ProductNames = string.Join(", ", s.ProductSales.Select(ps => ps.Products.Name))
             }).ToList();
 
-            // Привязываем данные к DataGrid
             PurchaseHistoryDataGrid.ItemsSource = purchaseHistory;
         }
 
         private void ReloadData()
         {
-            // Обновляем контекст данных и загружаем данные заново
             _context.Dispose();
             _context = new BookstoreDBEntities2();
             LoadPurchaseHistory();

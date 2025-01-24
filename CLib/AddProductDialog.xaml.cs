@@ -10,14 +10,13 @@ namespace CLib
         public AddProductDialog()
         {
             InitializeComponent();
-            Product = new Products(); // Инициализируем новый объект Product
+            Product = new Products();
         }
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Проверка на корректность ввода
                 if (string.IsNullOrWhiteSpace(NameTextBox.Text) ||
                     string.IsNullOrWhiteSpace(AuthorTextBox.Text) ||
                     string.IsNullOrWhiteSpace(GenreTextBox.Text) ||
@@ -28,16 +27,14 @@ namespace CLib
                     return;
                 }
 
-                // Заполняем свойства модели
                 Product.Name = NameTextBox.Text;
                 Product.Author = AuthorTextBox.Text;
                 Product.Category = GenreTextBox.Text;
                 Product.UnitPrice = price;
                 Product.StockQuantity = stockQuantity;
-                Product.ShelfQuantity = stockQuantity; // Например, по умолчанию на полке столько же
+                Product.ShelfQuantity = stockQuantity;
                 Product.LastReceivedDate = DateTime.Now;
 
-                // Устанавливаем результат успешного завершения диалога
                 this.DialogResult = true;
             }
             catch (Exception ex)
@@ -48,7 +45,6 @@ namespace CLib
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            // Отменяем добавление товара
             this.DialogResult = false;
         }
     }

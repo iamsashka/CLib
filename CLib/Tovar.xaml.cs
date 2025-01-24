@@ -12,28 +12,28 @@ namespace CLib
 {
     public partial class Tovar : Window
     {
-        private BookstoreDBEntities2 _context;  // Контекст базы данных
-        public ObservableCollection<Products> Products { get; set; }  // Коллекция для привязки
+        private BookstoreDBEntities2 _context;
+        public ObservableCollection<Products> Products { get; set; }
         public ObservableCollection<Notification> Notifications { get; set; }
 
         public Tovar()
         {
             InitializeComponent();
-            _context = new BookstoreDBEntities2(); // Инициализация контекста базы данных
+            _context = new BookstoreDBEntities2();
             Products = new ObservableCollection<Products>();
-            LoadProducts();  // Загрузка данных из базы
-            LoadFilters();  // Загрузка данных для фильтров
-            this.DataContext = this; // Привязка данных к окну
+            LoadProducts();
+            LoadFilters();
+            this.DataContext = this;
             Notifications = new ObservableCollection<Notification>();
             CheckLowStock();
         }
-        // Модель уведомлений
+
         public class Notification
         {
             public string Message { get; set; }
             public DateTime TimeStamp { get; set; }
         }
-        // Метод для отображения уведомлений
+
         private void ShowNotification(string message)
         {
             var notification = new Notification
@@ -63,7 +63,6 @@ namespace CLib
 
             NotificationStackPanel.Children.Add(notificationTextBlock);
 
-            // Анимация появления уведомления
             var fadeInAnimation = new DoubleAnimation
             {
                 From = 0,
@@ -72,7 +71,6 @@ namespace CLib
             };
             notificationTextBlock.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
 
-            // Таймер для удаления уведомления
             var timer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(5)
@@ -82,7 +80,6 @@ namespace CLib
             {
                 timer.Stop();
 
-                // Анимация исчезновения уведомления
                 var fadeOutAnimation = new DoubleAnimation
                 {
                     From = 1,
@@ -92,7 +89,6 @@ namespace CLib
 
                 fadeOutAnimation.Completed += (sender, args) =>
                 {
-                    // Удаляем уведомление после завершения анимации
                     NotificationStackPanel.Children.Remove(notificationTextBlock);
                 };
 
@@ -105,7 +101,7 @@ namespace CLib
         {
             try
             {
-                int lowStockThreshold = 5; // Порог низкого остатка
+                int lowStockThreshold = 5;
                 var lowStockProducts = _context.Products.Where(p => p.StockQuantity <= lowStockThreshold).ToList();
 
                 if (lowStockProducts.Any())
@@ -121,18 +117,17 @@ namespace CLib
             }
         }
 
-        // Загрузка данных в коллекцию Products
         private void LoadProducts()
         {
             try
             {
-                var products = _context.Products.ToList(); // Получение всех записей
+                var products = _context.Products.ToList();
                 Products.Clear();
                 foreach (var product in products)
                 {
                     Products.Add(product);
                 }
-                SalesDataGrid.ItemsSource = Products; // Привязка коллекции к DataGrid
+                SalesDataGrid.ItemsSource = Products;
             }
             catch (Exception ex)
             {
@@ -140,7 +135,6 @@ namespace CLib
             }
         }
 
-        // Загрузка данных для фильтров
         private void LoadFilters()
         {
             try
@@ -155,51 +149,47 @@ namespace CLib
             }
         }
 
-        // Добавление нового товара
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            var addProductDialog = new AddProductDialog(); // Окно добавления
+            var addProductDialog = new AddProductDialog();
             if (addProductDialog.ShowDialog() == true)
             {
-                var newProduct = addProductDialog.Product; // Получение нового товара
-                _context.Products.Add(newProduct);  // Добавление в базу
-                _context.SaveChanges();  // Сохранение изменений
-                Products.Add(newProduct); // Добавление в коллекцию
+                var newProduct = addProductDialog.Product;
+                _context.Products.Add(newProduct);
+                _context.SaveChanges();
+                Products.Add(newProduct);
                 MessageBox.Show("Товар успешно добавлен!");
             }
         }
 
-        // Редактирование товара
         private void UpdateProductButton_Click(object sender, RoutedEventArgs e)
         {
             if (SalesDataGrid.SelectedItem is Products selectedProduct)
             {
-                var editDialog = new EditProductDialog(selectedProduct); // Окно редактирования
+                var editDialog = new EditProductDialog(selectedProduct);
                 if (editDialog.ShowDialog() == true)
                 {
-                    _context.SaveChanges(); // Сохранение изменений в базе
-                    LoadProducts(); // Обновление коллекции
+                    _context.SaveChanges();
+                    LoadProducts();
                     MessageBox.Show("Товар успешно обновлен!");
                 }
             }
         }
 
-        // Удаление товара
         private void DeleteProductButton_Click(object sender, RoutedEventArgs e)
         {
             if (SalesDataGrid.SelectedItem is Products selectedProduct)
             {
                 if (MessageBox.Show("Вы уверены, что хотите удалить этот товар?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    _context.Products.Remove(selectedProduct); // Удаление из базы
-                    _context.SaveChanges(); // Сохранение изменений
-                    Products.Remove(selectedProduct); // Удаление из коллекции
+                    _context.Products.Remove(selectedProduct);
+                    _context.SaveChanges();
+                    Products.Remove(selectedProduct);
                     MessageBox.Show("Товар успешно удален!");
                 }
             }
         }
 
-        // Фильтрация товаров
         private void FilterProducts(object sender, EventArgs e)
         {
             string nameFilter = NameFilterComboBox.Text.ToLower();
@@ -219,37 +209,33 @@ namespace CLib
             }
         }
 
-        // Поиск товаров
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string nameFilter = NameFilterComboBox.Text.ToLower();
             string authorFilter = AuthorFilterComboBox.Text.ToLower();
             string genreFilter = GenreFilterComboBox.Text.ToLower();
 
-            // Фильтрация по указанным критериям
             var searchResults = _context.Products.Where(p =>
                 (string.IsNullOrEmpty(nameFilter) || p.Name.ToLower().Contains(nameFilter)) &&
                 (string.IsNullOrEmpty(authorFilter) || p.Author.ToLower().Contains(authorFilter)) &&
                 (string.IsNullOrEmpty(genreFilter) || p.Category.ToLower().Contains(genreFilter))
             ).ToList();
 
-            // Очистка текущей коллекции и добавление результатов
             Products.Clear();
             foreach (var product in searchResults)
             {
                 Products.Add(product);
             }
         }
+
         private void ResetFiltersButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Очистка значений в фильтрах
                 NameFilterComboBox.SelectedIndex = -1;
                 AuthorFilterComboBox.SelectedIndex = -1;
                 GenreFilterComboBox.SelectedIndex = -1;
 
-                // Восстановление полного списка товаров
                 LoadProducts();
 
                 MessageBox.Show("Фильтры сброшены, список товаров восстановлен.");
@@ -260,38 +246,41 @@ namespace CLib
             }
         }
 
-
-        // Переход на главную страницу
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
+
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
             Glavnaya glavWindow = new Glavnaya();
             glavWindow.Show();
             this.Close();
         }
+
         private void TovarButton_Click(object sender, RoutedEventArgs e)
         {
             Tovar tovarWindow = new Tovar();
             tovarWindow.Show();
             this.Close();
         }
+
         private void PostavkiButton_Click(object sender, RoutedEventArgs e)
         {
             Postavki postavWindow = new Postavki();
             postavWindow.Show();
             this.Close();
         }
+
         private void ProdajiButton_Click(object sender, RoutedEventArgs e)
         {
             Prodaji saleWindow = new Prodaji();
             saleWindow.Show();
             this.Close();
         }
+
         private void KlientsButton_Click(object sender, RoutedEventArgs e)
         {
             Clientts clientWindow = new Clientts();

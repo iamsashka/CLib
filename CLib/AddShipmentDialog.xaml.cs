@@ -7,9 +7,6 @@ using System.Linq;
 
 namespace CLib
 {
-    /// <summary>
-    /// Логика взаимодействия для AddShipmentDialog.xaml
-    /// </summary>
     public partial class AddShipmentDialog : Window
     {
         private readonly BookstoreDBEntities2 _context;
@@ -22,8 +19,6 @@ namespace CLib
             LoadShipments();
         }
 
-
-        // Загрузка данных существующих партий
         private void LoadShipments()
         {
             try
@@ -37,7 +32,6 @@ namespace CLib
             }
         }
 
-        // Обработка кнопки "Сохранить"
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -46,7 +40,6 @@ namespace CLib
                 {
                     if (shipment == null) continue;
 
-                    // Валидация данных
                     var validationErrors = ValidateShipment(shipment);
                     if (validationErrors.Any())
                     {
@@ -57,7 +50,6 @@ namespace CLib
                         continue;
                     }
 
-                    // Проверяем, существует ли товар в базе
                     var product = _context.Products.FirstOrDefault(p => p.ID_Product == shipment.Product_ID);
                     if (product == null)
                     {
@@ -68,17 +60,14 @@ namespace CLib
                         continue;
                     }
 
-                    // Обновляем количество на складе
                     product.StockQuantity += shipment.Quantity;
 
-                    // Добавляем партию, если она не добавлена
                     if (!_context.Shipments.Local.Contains(shipment))
                     {
                         _context.Shipments.Add(shipment);
                     }
                 }
 
-                // Сохраняем изменения в базе данных
                 _context.SaveChanges();
                 MessageBox.Show("Данные успешно сохранены!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 DialogResult = true;
@@ -94,15 +83,12 @@ namespace CLib
         {
             var errors = new List<string>();
 
-            // Проверка ID товара
             if (shipment.Product_ID <= 0)
                 errors.Add("ID Товара должен быть положительным числом");
 
-            // Проверка количества
             if (shipment.Quantity <= 0)
                 errors.Add("Количество должно быть больше нуля");
 
-            // Проверка даты поступления
             if (shipment.ShipmentDate == default)
                 errors.Add("Дата поступления не указана");
             else if (shipment.ShipmentDate > DateTime.Now)
@@ -111,8 +97,6 @@ namespace CLib
             return errors;
         }
 
-
-        // Обработка кнопки "Отмена"
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

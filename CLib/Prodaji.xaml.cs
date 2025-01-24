@@ -3,7 +3,6 @@ using System.Windows;
 using System.Data.Entity;
 using System.Linq;
 using System;
-using System.Windows.Ink;
 
 namespace CLib
 {
@@ -24,7 +23,7 @@ namespace CLib
             var sales = _context.Sales
                                 .Include(s => s.Products)
                                 .Include(s => s.Stores)
-                                .Include(s => s.Customers) // Загрузка клиентов
+                                .Include(s => s.Customers)
                                 .ToList();
 
             SalesDataGrid.ItemsSource = sales;
@@ -33,9 +32,8 @@ namespace CLib
         private void LoadFilters()
         {
             ProductComboBox.ItemsSource = _context.Products.ToList();
-            StoreComboBox.ItemsSource = _context.Stores.ToList(); // Фильтрация по клиенту
+            StoreComboBox.ItemsSource = _context.Stores.ToList();
         }
-
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -58,15 +56,15 @@ namespace CLib
 
         private void HistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadSales(); // Сброс фильтрации и отображение всех данных
+            LoadSales();
         }
 
         private void AddSaleButton_Click(object sender, RoutedEventArgs e)
         {
-            var addSaleDialog = new AddSaleDialog(); // Диалог для добавления/редактирования
+            var addSaleDialog = new AddSaleDialog();
             if (addSaleDialog.ShowDialog() == true)
             {
-                LoadSales(); // Перезагрузка данных после добавления
+                LoadSales();
             }
         }
 
@@ -74,10 +72,10 @@ namespace CLib
         {
             if (SalesDataGrid.SelectedItem is Sales selectedSale)
             {
-                var editSaleDialog = new AddSaleDialog(); // Передаём выбранную продажу
+                var editSaleDialog = new AddSaleDialog();
                 if (editSaleDialog.ShowDialog() == true)
                 {
-                    LoadSales(); // Перезагрузка данных после редактирования
+                    LoadSales();
                 }
             }
             else
@@ -97,7 +95,7 @@ namespace CLib
                 {
                     _context.Sales.Remove(selectedSale);
                     _context.SaveChanges();
-                    LoadSales(); // Перезагрузка данных после удаления
+                    LoadSales();
                 }
             }
             else
