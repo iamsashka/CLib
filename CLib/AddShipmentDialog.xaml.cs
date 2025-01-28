@@ -11,6 +11,10 @@ namespace CLib
     {
         private readonly BookstoreDBEntities2 _context;
         public List<Shipments> NewShipments { get; set; }
+        /// <summary>
+        /// Инициализирует окно, создаёт контекст базы данных (BookstoreDBEntities2), 
+        /// инициализирует список новых партий (NewShipments) и загружает существующие партии из базы данных с помощью метода LoadShipments().
+        /// </summary>
         public AddShipmentDialog()
         {
             InitializeComponent();
@@ -18,7 +22,10 @@ namespace CLib
             NewShipments = new List<Shipments>();
             LoadShipments();
         }
-
+        /// <summary>
+        /// Метод, который загружает список всех партий из базы данных и отображает их в ShipmentsDataGrid. 
+        /// Если возникнет ошибка при загрузке данных, выводится сообщение об ошибке.
+        /// </summary>
         private void LoadShipments()
         {
             try
@@ -31,7 +38,17 @@ namespace CLib
                 MessageBox.Show($"Ошибка при загрузке партий: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        ///Этот метод сохраняет партии в базе данных:
+        ///Перебирает все записи из ShipmentsDataGrid.
+        ///Для каждой партии проверяет её данные с помощью метода ValidateShipment(). Если есть ошибки валидации, выводится сообщение с перечнем ошибок.
+        ///Находит товар в базе данных по ID продукта и увеличивает его количество на количество поступившей партии.
+        ///Если партия не добавлена в контекст, она добавляется в базу данных.
+        ///После сохранения данных вызывается SaveChanges() для сохранения изменений в базе данных.
+        ///Если все данные сохранены успешно, появляется сообщение об успешном сохранении, и окно закрывается.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -78,7 +95,14 @@ namespace CLib
                 MessageBox.Show($"Ошибка при сохранении партий: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        /// Метод валидации данных партии:
+        /// Проверяет, что ID товара больше нуля.
+        /// Проверяет, что количество больше нуля.
+        /// Проверяет, что дата поступления не является пустой и не указывает на будущее.
+        /// </summary>
+        /// <param name="shipment"></param>
+        /// <returns> Возвращает список строк с ошибками валидации.</returns>
         private List<string> ValidateShipment(Shipments shipment)
         {
             var errors = new List<string>();
@@ -96,7 +120,11 @@ namespace CLib
 
             return errors;
         }
-
+        /// <summary>
+        /// Закрывает окно без сохранения изменений, устанавливая DialogResult = false.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

@@ -1,7 +1,11 @@
 ﻿<Window x:Class="CLib.EditCustomerDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Редактирование клиента" Height="550" Width="400" Background="#F7F9FB" MinWidth="400" MinHeight="450">
+        Title="Редактирование клиента" Height="550" Width="800" 
+        MinHeight="450" 
+        MinWidth="600" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!-- Стиль для кнопок -->
         <Style TargetType="Button">

@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CLib"
         mc:Ignorable="d"
-        Title="Продажи" Height="450" Width="800">
+        Title="Продажи" Height="450" Width="800" 
+        MinHeight="450" 
+        MinWidth="600" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -41,7 +45,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Верхнее меню -->
         <Border Background="#1E1E2E" Height="60" VerticalAlignment="Top" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -62,16 +65,12 @@
             </Grid>
         </Border>
 
-        <!-- Содержимое окна -->
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <!-- Для левой части -->
                 <ColumnDefinition Width="*"/>
-                <!-- Для DataGrid -->
             </Grid.ColumnDefinitions>
 
-            <!-- Левые кнопки и фильтры -->
             <StackPanel Grid.Column="0" Margin="10" Width="200">
                 <Button Content="Добавить продажу" FontSize="16" FontWeight="Bold" Click="AddSaleButton_Click" Margin="0,0,0,10"/>
                 <Button Content="Редактировать продажу" FontSize="16" FontWeight="Bold" Click="EditSaleButton_Click" Margin="0,0,0,10"/>
@@ -87,7 +86,6 @@
                 <Button Content="История продаж" FontSize="16" FontWeight="Bold" Click="HistoryButton_Click"/>
             </StackPanel>
 
-            <!-- DataGrid для отображения продаж -->
             <DataGrid Grid.Column="1" x:Name="SalesDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" ItemsSource="{Binding Sales}" Margin="10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Товар" Binding="{Binding Products.Name}" Width="*" />

@@ -9,11 +9,22 @@ namespace CLib
 {
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Конструктор класса MainWindow, который инициализирует компоненты пользовательского интерфейса окна.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Метод, который выполняется при нажатии кнопки "Профиль". 
+        /// Он проверяет, если уже открыт экземпляр MainWindow, то активирует его. 
+        /// Если нет, то открывает новое окно и закрывает текущее.
+        /// sender: объект, который вызывает этот метод (в данном случае, кнопка).
+        /// e: данные события, содержащие информацию о событии(например, параметры события нажатия кнопки).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (Window window in Application.Current.Windows)
@@ -29,7 +40,15 @@ namespace CLib
             newWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Метод, который выполняется при нажатии кнопки "Войти". 
+        /// Он проверяет введенные данные (логин и пароль), их длину и наличие. 
+        /// Если все данные валидны, метод пытается авторизовать пользователя, вызывая AuthenticateUser. 
+        /// Если авторизация успешна, открывается соответствующее окно в зависимости от роли пользователя (администратор, продавец, руководитель). 
+        /// В случае ошибок выводятся сообщения.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginTextBox.Text;
@@ -90,7 +109,14 @@ namespace CLib
                 MessageBox.Show("Неверный логин или пароль.", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        /// Метод для аутентификации пользователя. 
+        /// Он получает логин и пароль, хэширует пароль, а затем проверяет, существует ли учетная запись с таким логином и паролем в базе данных. 
+        /// Если такой пользователь найден, возвращается его роль.
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         private string AuthenticateUser(string login, string password)
         {
             try
@@ -119,7 +145,12 @@ namespace CLib
                 return null;
             }
         }
-
+        /// <summary>
+        /// Метод для хеширования пароля с использованием алгоритма SHA-256. 
+        /// Он принимает строку пароля, генерирует хеш и возвращает его в виде строки.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>Строка, представляющая хеш пароля.</returns>
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())

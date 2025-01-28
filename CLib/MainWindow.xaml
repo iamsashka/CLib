@@ -1,7 +1,12 @@
 ﻿<Window x:Class="CLib.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="550" Width="800" MinHeight="450" MinWidth="600">
+        Title="Авторизация" Height="550" 
+        Width="800" 
+        MinHeight="450" 
+        MinWidth="600" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!-- Стиль кнопки меню -->
         <Style x:Key="MenuButtonStyle" TargetType="Button">
@@ -33,13 +38,21 @@
     </Window.Resources>
 
     <Grid>
+        <!-- Строки и колонки для выравнивания -->
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
         <!-- Верхнее меню -->
-        <Border Background="#1E1E2E" Height="60" VerticalAlignment="Top" Grid.Row="0">
+        <Border Background="#1E1E2E" Height="60" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -56,14 +69,17 @@
             </Grid>
         </Border>
 
-        <!-- Основное содержимое -->
-        <Border Grid.Row="1" Margin="10" Background="Gray" CornerRadius="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <!-- Панель авторизации -->
+        <Border Grid.Row="1" Grid.Column="1" Background="Gray" CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20" Width="400" Height="401">
             <Grid>
-                <TextBlock Grid.Row="0" Text="Авторизация" FontSize="22" Margin="0,16,0,20" FontFamily="Bahnschrift Light" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Авторизация" FontSize="22" Margin="0,16,0,20" FontFamily="Bahnschrift Light" FontWeight="Bold" HorizontalAlignment="Center"/>
 
                 <!-- Поле ввода логина -->
-                <TextBlock VerticalAlignment="Top" Margin="0,86,0,0" FontSize="20"><Run Language="ru-ru" Text="     "/><Run Text="Логин"/></TextBlock>
-                <TextBox x:Name="LoginTextBox" Margin="22,128,10,0" VerticalAlignment="Top" MinHeight="30" Height="58">
+                <TextBlock VerticalAlignment="Top" Margin="0,86,0,0" FontSize="20" HorizontalAlignment="Left">
+                    <Run Language="ru-ru" Text="     "/>
+                    <Run Text="Логин"/>
+                </TextBlock>
+                <TextBox x:Name="LoginTextBox" Margin="22,128,10,0" VerticalAlignment="Top" MinHeight="30" Height="58" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontFamily="Bahnschrift Light">
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="Template">
@@ -80,8 +96,11 @@
                 </TextBox>
 
                 <!-- Поле ввода пароля -->
-                <TextBlock VerticalAlignment="Top" Margin="0,191,0,0" FontSize="20"><Run Language="ru-ru" Text="     "/><Run Text="Пароль"/></TextBlock>
-                <PasswordBox x:Name="PasswordBox" VerticalAlignment="Top" MinHeight="30" Margin="22,223,10,0" Height="53">
+                <TextBlock VerticalAlignment="Top" Margin="0,191,0,0" FontSize="20" HorizontalAlignment="Left">
+                    <Run Language="ru-ru" Text="     "/>
+                    <Run Text="Пароль"/>
+                </TextBlock>
+                <PasswordBox x:Name="PasswordBox" VerticalAlignment="Top" MinHeight="30" Margin="22,223,10,0" Height="53" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontFamily="Bahnschrift Light">
                     <PasswordBox.Style>
                         <Style TargetType="PasswordBox">
                             <Setter Property="Template">
@@ -98,7 +117,7 @@
                 </PasswordBox>
 
                 <!-- Кнопка Войти -->
-                <Button Content="Войти" Margin="262,334,262,20" Width="Auto" Background="White" FontSize="18" Click="Button_Click">
+                <Button Content="Войти" Margin="123,323,111,0" Width="Auto" Background="White" FontSize="18" Click="Button_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
@@ -115,5 +134,10 @@
                 </Button>
             </Grid>
         </Border>
+
+        <!-- Нижний бордер -->
+        <Border Background="#1E1E2E" Height="60" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+        </Border>
+        
     </Grid>
 </Window>

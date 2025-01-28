@@ -15,7 +15,10 @@ namespace CLib
         private BookstoreDBEntities2 _context;
         public ObservableCollection<Products> Products { get; set; }
         public ObservableCollection<Notification> Notifications { get; set; }
-
+        /// <summary>
+        /// Инициализирует компоненты окна, создает контекст для работы с базой данных, загружает список товаров и фильтры, 
+        /// а также проверяет наличие товаров с низким уровнем остатка.
+        /// </summary>
         public Tovar()
         {
             InitializeComponent();
@@ -27,13 +30,20 @@ namespace CLib
             Notifications = new ObservableCollection<Notification>();
             CheckLowStock();
         }
-
+        /// <summary>
+        /// Вспомогательный класс для хранения информации об уведомлениях (сообщение и время).
+        /// </summary>
         public class Notification
         {
             public string Message { get; set; }
             public DateTime TimeStamp { get; set; }
         }
-
+        /// <summary>
+        /// Метод для отображения уведомления на экране. 
+        /// Уведомление появляется с анимацией появления, а затем исчезает через 5 секунд с анимацией исчезновения. 
+        /// Если количество уведомлений больше 5, то старые удаляются.
+        /// </summary>
+        /// <param name="message"></param>
         private void ShowNotification(string message)
         {
             var notification = new Notification
@@ -96,7 +106,10 @@ namespace CLib
             };
             timer.Start();
         }
-
+        /// <summary>
+        /// Метод проверяет на то, есть ли товары с остатками, меньше или равными заданному порогу (lowStockThreshold). 
+        /// Если такие товары есть, выводится уведомление с их названиями и количеством.
+        /// </summary>
         private void CheckLowStock()
         {
             try
@@ -116,7 +129,9 @@ namespace CLib
                 MessageBox.Show($"Ошибка при проверке остатков: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Метод который загружает все товары из базы данных и отображает их в SalesDataGrid.
+        /// </summary>
         private void LoadProducts()
         {
             try
@@ -134,7 +149,9 @@ namespace CLib
                 MessageBox.Show($"Ошибка при загрузке товаров: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Метод загружает данные для фильтров (по названию, автору и категории) из базы данных.
+        /// </summary>
         private void LoadFilters()
         {
             try
@@ -148,7 +165,11 @@ namespace CLib
                 MessageBox.Show($"Ошибка при загрузке фильтров: {ex.Message}");
             }
         }
-
+        /// <summary>
+        ///  Метод открывает диалог для добавления нового товара. После успешного добавления товар сохраняется в базе данных и отображается в списке.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             var addProductDialog = new AddProductDialog();
@@ -161,7 +182,11 @@ namespace CLib
                 MessageBox.Show("Товар успешно добавлен!");
             }
         }
-
+        /// <summary>
+        /// Метод открывает диалог для редактирования выбранного товара. После внесения изменений товар сохраняется в базе данных, и список обновляется.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateProductButton_Click(object sender, RoutedEventArgs e)
         {
             if (SalesDataGrid.SelectedItem is Products selectedProduct)
@@ -175,7 +200,11 @@ namespace CLib
                 }
             }
         }
-
+        /// <summary>
+        ///  Метод удаляет выбранный товар из базы данных и обновляет список товаров.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteProductButton_Click(object sender, RoutedEventArgs e)
         {
             if (SalesDataGrid.SelectedItem is Products selectedProduct)
@@ -189,7 +218,14 @@ namespace CLib
                 }
             }
         }
-
+        /// <summary>
+        /// Метод для фильтрации товаров по введенным значениям в комбобоксах (название, автор, категория). 
+        /// После фильтрации товары отображаются в SalesDataGrid.
+        /// sender: Источник события
+        /// e: Данные события
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FilterProducts(object sender, EventArgs e)
         {
             string nameFilter = NameFilterComboBox.Text.ToLower();
@@ -208,7 +244,11 @@ namespace CLib
                 Products.Add(product);
             }
         }
-
+        /// <summary>
+        /// Метод выполняет поиск товаров по фильтрам (название, автор, категория) и отображает результаты в SalesDataGrid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string nameFilter = NameFilterComboBox.Text.ToLower();
@@ -227,7 +267,11 @@ namespace CLib
                 Products.Add(product);
             }
         }
-
+        /// <summary>
+        /// Метод сбрасывает все фильтры и восстанавливает исходный список товаров, загружая их из базы данных.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResetFiltersButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -245,42 +289,66 @@ namespace CLib
                 MessageBox.Show($"Ошибка при сбросе фильтров: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Обработчик для перехода между окнами: переход к окну профиля.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Обработчик для перехода между окнами: Переход к главному окну.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
             Glavnaya glavWindow = new Glavnaya();
             glavWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Обработчик для перехода между окнами: Переход к окну товаров (текущее окно).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TovarButton_Click(object sender, RoutedEventArgs e)
         {
             Tovar tovarWindow = new Tovar();
             tovarWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Обработчик для перехода между окнами: Переход к окну поставок.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PostavkiButton_Click(object sender, RoutedEventArgs e)
         {
             Postavki postavWindow = new Postavki();
             postavWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Обработчик для перехода между окнами: Переход к окну продаж.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProdajiButton_Click(object sender, RoutedEventArgs e)
         {
             Prodaji saleWindow = new Prodaji();
             saleWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Обработчик для перехода между окнами: Переход к окну клиентов.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void KlientsButton_Click(object sender, RoutedEventArgs e)
         {
             Clientts clientWindow = new Clientts();

@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CLib"
         mc:Ignorable="d"
-        Title="Товары" Height="650" Width="800">
+        Title="Товары" Height="650" Width="800" 
+        MinHeight="450" 
+        MinWidth="600" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -41,7 +45,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Верхнее меню -->
         <Border Background="#1E1E2E" Height="60" VerticalAlignment="Top" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -61,20 +64,16 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <!-- Контейнер для уведомлений с прокруткой -->
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10,82,10,10">
             <StackPanel x:Name="NotificationStackPanel" VerticalAlignment="Top"/>
         </ScrollViewer>
 
-
-        <!-- Основное содержимое -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Левая часть для фильтров и кнопок -->
             <StackPanel Orientation="Vertical" Margin="10,10,10,10">
                 <Button Content="Добавить товар" Margin="0,10,0,10" FontSize="16" FontWeight="Bold" Click="AddProductButton_Click"/>
                 <Button Content="Удалить товар" Margin="0,10,0,10" FontSize="16" FontWeight="Bold" Click="DeleteProductButton_Click"/>
@@ -94,7 +93,6 @@
   
             </StackPanel>
 
-            <!-- DataGrid для отображения товаров -->
             <DataGrid x:Name="SalesDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" ItemsSource="{Binding Products}" Margin="10,10,10,61" Grid.Column="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Товар" Binding="{Binding Name}" Width="*" />

@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CLib"
         mc:Ignorable="d"
-        Title="Главная" Height="550" Width="800" MinHeight="450" MinWidth="600">
+        Title="Главная" Width="800" 
+        MinHeight="450" 
+        MinWidth="600" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -41,7 +45,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Верхнее меню -->
         <Border Background="#1E1E2E" Height="60" VerticalAlignment="Top" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -61,8 +64,6 @@
                 </StackPanel>
             </Grid>
         </Border>
-
-        <!-- Таблица с данными -->
         <Grid Grid.Row="1" Background="White" Margin="10">
             <DataGrid x:Name="SalesDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" Margin="10"
                       CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">

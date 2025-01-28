@@ -1,9 +1,12 @@
 ﻿<Window x:Class="CLib.AddProductDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Добавить товар" Height="600" Width="500" Background="#F7F9FB" MinWidth="400" MinHeight="300">
+        Title="Добавить товар" Height="600" Width="800" 
+        MinHeight="450" 
+        MinWidth="600" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <!-- Стиль для закругленных кнопок -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#4CAF50"/>
             <Setter Property="Foreground" Value="White"/>
@@ -31,40 +34,33 @@
     <Grid>
         <Border Background="White" CornerRadius="10" Margin="10" Padding="20" BorderBrush="#D3D3D3" BorderThickness="1">
             <StackPanel Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <!-- Заголовок -->
                 <TextBlock Text="Добавить товар" FontSize="20" FontWeight="Bold" Foreground="#333" Margin="0,0,0,20" HorizontalAlignment="Center"/>
 
-                <!-- Название товара -->
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Название товара:" FontWeight="SemiBold" Margin="0,0,0,5"/>
                     <TextBox Name="NameTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" />
                 </StackPanel>
 
-                <!-- Автор -->
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Автор:" FontWeight="SemiBold" Margin="0,0,0,5"/>
                     <TextBox Name="AuthorTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" />
                 </StackPanel>
 
-                <!-- Жанр -->
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Жанр:" FontWeight="SemiBold" Margin="0,0,0,5"/>
                     <TextBox Name="GenreTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" />
                 </StackPanel>
 
-                <!-- Цена -->
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Цена:" FontWeight="SemiBold" Margin="0,0,0,5"/>
                     <TextBox Name="PriceTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" />
                 </StackPanel>
 
-                <!-- Количество на складе -->
                 <StackPanel Margin="0,0,0,20">
                     <TextBlock Text="Количество на складе:" FontWeight="SemiBold" Margin="0,0,0,5"/>
                     <TextBox Name="StockQuantityTextBox" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1" />
                 </StackPanel>
 
-                <!-- Кнопки -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                     <Button Content="Добавить" Click="AddProductButton_Click"/>
                     <Button Content="Отмена" Background="#F44336" BorderBrush="#D32F2F" Click="CancelButton_Click"/>
