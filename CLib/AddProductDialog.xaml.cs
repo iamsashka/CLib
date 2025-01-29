@@ -28,32 +28,31 @@ namespace CLib
             {
                 if (string.IsNullOrWhiteSpace(NameTextBox.Text) || !System.Text.RegularExpressions.Regex.IsMatch(NameTextBox.Text, @"^[a-zA-Zа-яА-Я]+$"))
                 {
-                    MessageBox.Show("Название товара может содержать только буквы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Название товара может содержать только буквы.");
                     return;
                 }
 
-                var authorText = AuthorTextBox.Text.Trim();
-                if (string.IsNullOrWhiteSpace(authorText) || authorText.Split(' ').Length > 5 || !System.Text.RegularExpressions.Regex.IsMatch(authorText, @"^[a-zA-Zа-яА-Я\s]+$"))
+                if (string.IsNullOrWhiteSpace(AuthorTextBox.Text) || AuthorTextBox.Text.Trim().Split(' ').Length > 5 || !System.Text.RegularExpressions.Regex.IsMatch(AuthorTextBox.Text, @"^[a-zA-Zа-яА-Я\s]+$"))
                 {
-                    MessageBox.Show("Автор должен содержать до 5 слов, разделённых пробелами и только буквы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Автор должен содержать до 5 слов и только буквы.");
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(GenreTextBox.Text) || !System.Text.RegularExpressions.Regex.IsMatch(GenreTextBox.Text, @"^[a-zA-Zа-яА-Я]+$"))
                 {
-                    MessageBox.Show("Жанр может содержать только буквы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Жанр может содержать только буквы.");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(PriceTextBox.Text) || !decimal.TryParse(PriceTextBox.Text, out decimal price) || price <= 0)
+                if (!TryParsePositiveDecimal(PriceTextBox.Text, out decimal price))
                 {
-                    MessageBox.Show("Цена должна быть положительным числом.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Цена должна быть положительным числом больше 0.");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(StockQuantityTextBox.Text) || !int.TryParse(StockQuantityTextBox.Text, out int stockQuantity) || stockQuantity <= 0)
+                if (!TryParsePositiveInt(StockQuantityTextBox.Text, out int stockQuantity))
                 {
-                    MessageBox.Show("Количество на складе должно быть положительным числом и больше 0.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ShowError("Количество на складе должно быть положительным числом больше 0.");
                     return;
                 }
 
@@ -65,13 +64,29 @@ namespace CLib
                 Product.ShelfQuantity = stockQuantity;
                 Product.LastReceivedDate = DateTime.Now;
 
-                this.DialogResult = true;
+                DialogResult = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при добавлении товара: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowError($"Ошибка при добавлении товара: {ex.Message}");
             }
         }
+
+        private bool TryParsePositiveDecimal(string input, out decimal result)
+        {
+            return decimal.TryParse(input, out result) && result > 0;
+        }
+
+        private bool TryParsePositiveInt(string input, out int result)
+        {
+            return int.TryParse(input, out result) && result > 0;
+        }
+
+        private void ShowError(string message)
+        {
+            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
         /// <summary>
         /// Метод проверяет, состоит ли строка только из букв. Используется для проверки названия товара, автора и жанра.
         /// </summary>
