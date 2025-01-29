@@ -1,0 +1,74 @@
+﻿<Window x:Class="CLib.EditSupplierDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактировать поставщика" Height="550" Width="800" 
+        MinHeight="450" 
+        MinWidth="600" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Стиль для кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderBrush" Value="#388E3C"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Border Background="White" CornerRadius="10" Margin="10" Padding="20" BorderBrush="#D3D3D3" BorderThickness="1">
+            <StackPanel Margin="10" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <!-- Заголовок окна -->
+                <TextBlock Text="Редактировать поставщика" FontSize="20" FontWeight="Bold" Foreground="#333" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+                <!-- Поле для Названия компании -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Название компании" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding CompanyName}" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Поле для Контактного лица -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Контактное лицо" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding ContactPerson}" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Поле для Телефона -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Телефон" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding Phone}" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Поле для Адреса -->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="Адрес" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding Address}" Width="400" Height="30" Padding="5" Background="#FAFAFA" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                </StackPanel>
+
+                <!-- Кнопки для сохранения и отмены -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Button Content="Сохранить" Click="SaveButton_Click"/>
+                    <Button Content="Отмена" Background="#F44336" BorderBrush="#D32F2F" Click="CancelButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

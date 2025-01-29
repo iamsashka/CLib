@@ -89,6 +89,28 @@ namespace CLib
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditSupplierButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранного поставщика из DataGrid
+            if (SalesDataGrid.SelectedItem is Suppliers selectedSupplier)
+            {
+                var dialog = new EditSupplierDialog(selectedSupplier); // Здесь создаем окно редактирования поставщика
+                if (dialog.ShowDialog() == true)
+                {
+                    LoadSuppliers(); // Перезагружаем список поставщиков после редактирования
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите поставщика для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        /// <summary>
         ///  Открывает главное окно программы и закрывает текущее окно Postavki.
         /// </summary>
         /// <param name="sender"></param>

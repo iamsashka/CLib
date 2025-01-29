@@ -128,6 +128,9 @@
     <Compile Include="EditProductDialog.xaml.cs">
       <DependentUpon>EditProductDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditSupplierDialog.xaml.cs">
+      <DependentUpon>EditSupplierDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Glavnaya.xaml.cs">
       <DependentUpon>Glavnaya.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditProductDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditSupplierDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
